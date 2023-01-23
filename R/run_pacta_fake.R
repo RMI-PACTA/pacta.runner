@@ -10,7 +10,7 @@ run_pacta_fake <- function(
     "50_Outputs"
   )
   ) {
-  log_warning("This is a fake PACTA Runner. It does not generate real results")
+  log_warn("This is a fake PACTA Runner. It does not generate real results")
   log_info("Beginning PACTA process (sleeping for {duration} seconds)")
   Sys.sleep(duration)
   file.create(file.path(working_dir, dirs_to_populate, "FAKE-RESULTS.txt"))
