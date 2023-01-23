@@ -1,3 +1,4 @@
+#' @export
 run_pacta <- function(
   working_dir,
   user_dir = tempfile(),

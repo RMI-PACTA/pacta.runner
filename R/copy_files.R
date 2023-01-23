@@ -1,3 +1,4 @@
+#' @export
 copy_dir_contents <- function(
   from,
   to,

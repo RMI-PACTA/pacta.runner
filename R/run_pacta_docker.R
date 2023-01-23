@@ -1,4 +1,5 @@
 # Known helpful settings
+#' @export
 default_docker_args <- function() {
   log_debug("Using Default docker arguments.")
   c(
@@ -9,6 +10,7 @@ default_docker_args <- function() {
   )
 }
 
+#' @export
 docker_mount <-  function(local_path, target_path) {
   if (!file.exists(local_path)) {
     log_warn(
@@ -27,6 +29,7 @@ docker_mount <-  function(local_path, target_path) {
   )
 }
 
+#' @export
 run_pacta_docker <- function(
   working_dir,
   user_dir,
