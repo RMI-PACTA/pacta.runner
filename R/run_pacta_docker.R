@@ -44,11 +44,11 @@ run_pacta_docker <- function(
     docker_mount(
       local_path = user_dir,
       target_path = "/user_results"
-    ),
+    )
+  ),
   docker_image = "transitionmonitordockerregistry.azurecr.io/rmi_pacta",
   docker_tag = "latest",
   copy = TRUE
-  )
   ) {
 
   exit_code <- system2(
