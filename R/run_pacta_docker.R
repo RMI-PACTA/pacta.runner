@@ -51,8 +51,6 @@ run_pacta_docker <- function(
   copy = TRUE
   ) {
 
-  browser()
-
   docker_command <- "docker"
   docker_command_args = c(
     "run",
