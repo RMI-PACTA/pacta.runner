@@ -63,7 +63,7 @@ run_pacta_docker <- function(
   log_debug(
     paste(
       "docker command:", 
-      "paste(docker_command, paste(docker_command_args, collapse = ' '))"
+      "{paste(docker_command, paste(docker_command_args, collapse = ' '))}"
     )
   )
   log_info("Starting Docker process")
