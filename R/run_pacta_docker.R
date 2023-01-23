@@ -35,7 +35,7 @@ run_pacta_docker <- function(
   user_dir,
   script_to_run = "/bound/bin/run-r-scripts",
   script_arguments = "",
-  args = c(
+  docker_args = c(
     default_docker_args,
     docker_mount(
       local_path = working_dir,
