@@ -36,7 +36,7 @@ run_pacta_docker <- function(
   script_to_run = "/bound/bin/run-r-scripts",
   script_arguments = "",
   docker_args = c(
-    default_docker_args,
+    default_docker_args(),
     docker_mount(
       local_path = working_dir,
       target_path = "/bound/working_dir"
@@ -51,15 +51,28 @@ run_pacta_docker <- function(
   copy = TRUE
   ) {
 
+  browser()
+
+  docker_command <- "docker"
+  docker_command_args = c(
+    "run",
+    docker_args,
+    paste0(docker_image, ":", docker_tag),
+    script_to_run,
+    script_arguments
+  )
+
+  log_debug(
+    paste(
+      "docker command:", 
+      "paste(docker_command, paste(docker_command_args, collapse = ' '))"
+    )
+  )
+  log_info("Starting Docker process")
+
   exit_code <- system2(
     command = "docker",
-    args = c(
-      "run",
-      docker_args,
-      paste0(docker_image, ":", docker_tag),
-      script_to_run,
-      script_arguments
-    )
+    args = docker_command_args
   )
 
   if (exit_code == 0) {
