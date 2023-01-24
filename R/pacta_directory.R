@@ -45,27 +45,26 @@ find_portfolios <- function(
     if (reject_done_processed_inputs && dir.exists(processed_inputs)) {
       log_trace("Checking for processed inputs in: {processed_inputs}")
       if (!is_directory_empty(processed_inputs)) {
-        log_warn("Processed input directory not empty: {processed_inputs}")
+        log_debug("Processed input directory not empty: {processed_inputs}")
         is_rejected = TRUE
       }
     }
     if (reject_done_outputs && dir.exists(results)) {
       log_trace("Checking for results in: {results}")
       if (!is_directory_empty(results)) {
-        log_warn("Results directory not empty: {results}")
+        log_debug("Results directory not empty: {results}")
         is_rejected = TRUE
       }
     }
     if (reject_done_outputs && dir.exists(outputs)) {
       log_trace("Checking for outputs in: {outputs}")
       if (!is_directory_empty(outputs)) {
-        log_warn("Outputs directory not empty: {outputs}")
+        log_debug("Outputs directory not empty: {outputs}")
         is_rejected = TRUE
       }
     }
     if (!is_rejected){
       portfolios <- c(portfolios, x)
-      add_portfolio_to_queue(portfolio = x, queue = portfolio_queue)
     }
   }
   return(portfolios)
@@ -149,7 +148,8 @@ working_dir_from_parameter_file <- function(
 
 validate_working_dir <- function(
   working_dir,
-  expected_directories = pacta_dirs
+  expected_directories = essential_pacta_dirs,
+  create = FALSE
   ) {
   is_valid_working_dir <- TRUE
   log_trace("Checking directory exists: {working_dir}")
@@ -161,8 +161,21 @@ validate_working_dir <- function(
   subdirectories <- file.path(working_dir, expected_directories)
   if (!all(dir.exists(subdirectories))){
     missing_subs <- subdirectories[!dir.exists(subdirectories)]
-    log_warn("Missing subdirectories: {missing_subs}")
-    is_valid_working_dir <- FALSE
+    log_debug("Missing subdirectories: {missing_subs}")
+    if (create) {
+      log_trace("Creating subdirectories: {missing_subs}")
+      for (x in missing_subs) {
+        dir.create(x)
+      }
+      # check that everything is okay now
+      is_valid_working_dir <- validate_working_dir(
+        working_dir = working_dir,
+        expected_directories = expected_directories,
+        create = FALSE
+      )
+    } else {
+      is_valid_working_dir <- FALSE
+    }
   }
   return(is_valid_working_dir)
 }
@@ -203,15 +216,3 @@ searcher_distributed <- function(
   stop()
 }
 
-verify_pacta_directory <- function(
-  working_dir,
-  portfolio_name,
-  complete = TRUE
-  ) {
-  log_trace()
-
-}
-
-ensure_pacta_directory <- function(working_dir) {
-
-}

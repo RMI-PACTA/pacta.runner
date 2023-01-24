@@ -17,5 +17,6 @@
 #' @importFrom logger SUCCESS
 #' @importFrom logger TRACE
 #' @importFrom logger WARN
+#' @importFrom txtq txtq
 ## usethis namespace: end
 NULL
